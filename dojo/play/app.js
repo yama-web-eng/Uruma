@@ -144,6 +144,7 @@ function rVerb(q){
 function chooser(){
  var cs=[[5,'5問コース','約3分','まずはここから'],[10,'10問コース','約6分','ちょうどいい量'],[15,'15問コース','約9分','しっかり練習'],[20,'20問コース','約12分','じっくり実力アップ']];
  var h='<div class="kt-say"><img src="'+KT.img('smile')+'" alt="KT" width="110"><div class="bubble"><b>KTからひとこと</b>今日はどれくらいやる?<br>無理せず、できる数でOK!</div></div><div class="grid courses">';
+ if(MODE==='verb')cs.push([N,'全問コース','約'+Math.round(N*0.6)+'分','全'+N+'語をぜんぶ']);
  cs.forEach(function(c){h+='<button class="tile cbtn" data-n="'+c[0]+'"><div class="no">'+c[0]+'</div><div class="tt">'+c[1]+'</div><div class="ds">'+c[3]+'<br>めやす '+c[2]+'</div></button>'});
  app.innerHTML=h+'</div>';
  Array.prototype.forEach.call(app.querySelectorAll('.cbtn'),function(b){b.onclick=function(){startCourse(+b.getAttribute('data-n'))}});
