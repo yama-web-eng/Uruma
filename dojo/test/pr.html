@@ -7,9 +7,11 @@
 <div class="top"><img src="../logo.png" alt="Uruma"><a href="chu3.html" id="topback">もどる</a></div>
 <div class="boardwrap mini"><div class="frame"><header class="board"><div class="chalk-sub chalk" id="psub"></div><h1 class="chalk" id="ph1"></h1></header></div></div><div class="trays mini"><div class="tray"><i></i><i></i><i></i><i class="er"></i></div></div>
 <div class="wrap"><div id="app"></div><a class="back" id="back" href="prac.html">← もどる</a>
-<script>var Q=new URLSearchParams(location.search),G=Q.get("g")||"3",PK=Q.get("p"),CT=Q.get("c")||"form";document.write('<script src="data/prac'+G+'.js?v=1"><\/script>')</script>
-<script>var FORM=[],REORDER_JA=[],REORDER=[],TRANSLATE=[],KT_AUDIO=true,MODE=CT;(function(){var d=(window.PRAC||{})[PK]||{};FORM=d.FORM||[];REORDER_JA=d.REORDER_JA||[];REORDER=d.REORDER||[];TRANSLATE=d.TRANSLATE||[];
+<script>var Q=new URLSearchParams(location.search),G=Q.get("g")||"3",PK=Q.get("p"),UN=Q.get("u"),CT=Q.get("c")||"form";document.write('<script src="data/prac'+G+'.js?v=1"><\/script>')</script>
+<script>var FORM=[],REORDER_JA=[],REORDER=[],TRANSLATE=[],KT_AUDIO=true,MODE=CT;function sh(a){a=a.slice();for(var i=a.length-1;i>0;i--){var j=Math.floor(Math.random()*(i+1)),t=a[i];a[i]=a[j];a[j]=t}return a}
+function pool(U,key){var ks=Object.keys(window.PRAC||{}).filter(function(k){return k.split("-")[0]===U}),ls=ks.map(function(k){return sh(window.PRAC[k][key]||[])}),out=[],i=0;while(true){var add=false;ls.forEach(function(l){if(l[i]){out.push(l[i]);add=true}});i++;if(!add)break}return out}
+(function(){var d=UN?{title:"Unit "+UN+" 全体"}:((window.PRAC||{})[PK]||{});if(UN){FORM=pool(UN,"FORM");REORDER_JA=pool(UN,"REORDER_JA");REORDER=pool(UN,"REORDER");TRANSLATE=pool(UN,"TRANSLATE")}else{FORM=d.FORM||[];REORDER_JA=d.REORDER_JA||[];REORDER=d.REORDER||[];TRANSLATE=d.TRANSLATE||[]}
 var nm={form:"① 語形変化",reorderja:"② 並べかえ(日本語あり)",reorder:"③ 並べかえ(日本語なし)",translate:"④ 日本語を英語にする"};
-var lab="中"+G+" Unit "+PK.replace("-1-2","-1〜2");document.title=nm[CT]+"｜"+lab;document.getElementById("psub").textContent=lab+" ／ "+(d.title||"");document.getElementById("ph1").textContent=nm[CT];
-var bk="prac.html?g="+G+"&p="+PK;document.getElementById("back").href=bk;document.getElementById("topback").href=bk})()</script>
+var lab=UN?"中"+G+" Unit "+UN+" 全体":"中"+G+" Unit "+PK.replace("-1-2","-1〜2");document.title=nm[CT]+"｜"+lab;document.getElementById("psub").textContent=lab+" ／ "+(d.title||"");document.getElementById("ph1").textContent=nm[CT];
+var bk=UN?"uprac.html?g="+G+"&u="+UN:"prac.html?g="+G+"&p="+PK;document.getElementById("back").href=bk;document.getElementById("topback").href=bk})()</script>
 <script src="../play/app.js?v=11"></script><footer>URUMA</footer></div></body></html>

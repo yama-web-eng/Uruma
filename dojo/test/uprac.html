@@ -1,0 +1,21 @@
+<!doctype html>
+<html lang="ja"><head><meta charset="utf-8"><meta name="color-scheme" content="light only"><meta name="viewport" content="width=device-width,initial-scale=1">
+<title>実践コース｜KTの特訓道場</title>
+<link rel="preconnect" href="https://fonts.googleapis.com"><link href="https://fonts.googleapis.com/css2?family=Zen+Maru+Gothic:wght@400;500;700;900&family=Klee+One:wght@400;600&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="../style.css"><link rel="stylesheet" href="../top.css?v=7"><script src="../kt-outfit.js?v=2"></script><link rel="stylesheet" href="../play/play.css?v=7"><link rel="stylesheet" href="test.css?v=6"></head>
+<body class="home play"><svg width="0" height="0" style="position:absolute" aria-hidden="true"><defs><filter id="chalk" x="-5%" y="-10%" width="110%" height="120%"><feTurbulence type="fractalNoise" baseFrequency="0.85" numOctaves="2" seed="4" result="n"/><feDisplacementMap in="SourceGraphic" in2="n" scale="2" xChannelSelector="R" yChannelSelector="G" result="d"/><feTurbulence type="fractalNoise" baseFrequency="1.6" numOctaves="1" seed="9" result="g"/><feColorMatrix in="g" type="matrix" values="0 0 0 0 1  0 0 0 0 1  0 0 0 0 1  0 0 0 -.6 1.15" result="m"/><feComposite in="d" in2="m" operator="in"/></filter></defs></svg>
+<div class="top"><img src="../logo.png" alt="Uruma"><a href="chu3.html" id="topback">もどる</a></div>
+<div class="boardwrap mini"><div class="frame"><header class="board"><div class="chalk-sub chalk" id="psub"></div><h1 class="chalk" id="ph1"></h1></header></div></div><div class="trays mini"><div class="tray"><i></i><i></i><i></i><i class="er"></i></div></div>
+<div class="wrap"><div class="welcome kt"><img class="kt-img" id="kt-w" alt="KT" width="96"><div><b id="ptitle"></b><span>Unit全体の問題がまざって出るよ。4種類の問題で、じっくり練習しよう。むずかしかったら飛ばしてOK!</span></div></div>
+<div class="sec">実践コース</div><div class="grid" id="cats"></div>
+<div class="tip" id="tip"></div><a class="back" id="back" href="part.html">← もどる</a>
+<script>var Q=new URLSearchParams(location.search),G=Q.get("g")||"3",U=Q.get("u");document.write('<script src="data/prac'+G+'.js?v=1"><\/script><script src="data/basic'+G+'.js?v=2"><\/script>')</script>
+<script>(function(){document.getElementById("kt-w").src=KT.img("smile");var bk="unit.html?g="+G+"&u="+U;document.getElementById("back").href=bk;document.getElementById("topback").href=bk;
+var ks=Object.keys(window.PRAC||{}).filter(function(k){return k.split("-")[0]===U}),lab="中"+G+" Unit "+U+" 全体";
+document.title="実践コース｜"+lab;document.getElementById("psub").textContent=lab+" ／ 実践コース";document.getElementById("ph1").textContent="Unit "+U+" 全体";document.getElementById("ptitle").textContent="Unit "+U+" 全体の実践コース";
+if(!ks.length){document.getElementById("ptitle").textContent="ページが見つかりません";return}
+var C=[["form","01","語形変化","目印を見つけて、正しい形に"],["reorderja","02","並べかえ(日本語あり)","日本語をヒントに、語を並べて英文に"],["reorder","03","並べかえ(日本語なし)","英語だけで並べかえ"],["translate","04","日本語を英語にする","自分の力で英文を書いてみよう"]],h="";
+C.forEach(function(c){h+='<a class="tile" href="pr.html?g='+G+'&u='+U+'&c='+c[0]+'"><div class="no">'+c[1]+'</div><div class="tt">'+c[2]+'</div><div class="ds">'+c[3]+'</div></a>'});
+document.getElementById("cats").innerHTML=h;
+var tips=[];Object.keys(window.BASIC_PARTS||{}).filter(function(k){return k.split("-")[0]===U}).forEach(function(k){tips=tips.concat(BASIC_PARTS[k].tips||[])});
+if(tips.length)document.getElementById("tip").innerHTML="<b>KTからのワンポイントアドバイス</b><br>"+tips[Math.floor(Math.random()*tips.length)]})()</script><footer>URUMA</footer></div></body></html>
