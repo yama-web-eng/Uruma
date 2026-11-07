@@ -91,3 +91,4 @@ button.sound.on{background:var(--blue);color:#fff}
 .vgrp{margin:0 0 12px}.vlab{font-weight:700;color:var(--blue);margin:0 0 6px;font-size:.95rem}
 .vch{display:grid;grid-template-columns:1fr 1fr;gap:8px}.vch button.choice{text-align:center;padding:11px 8px;margin:0}
 button.choice.sel{border-color:var(--blue);background:#e8f0fb;font-weight:700}
+.mates{margin:8px 0;padding:8px 10px;background:#fff;border:1px dashed var(--orange);border-radius:8px;font-size:.92rem;line-height:1.6}.mates b{color:var(--orange)}

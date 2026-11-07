@@ -8,8 +8,10 @@ function expand(s){var re=/\(([^()|]+(?:\|[^()|]+)+)\)/;var m=re.exec(s);if(!m)r
 function dat(n){return typeof window[n]!=='undefined'?window[n]:[]}
 var cfg={form:{data:dat('FORM')},reorderja:{data:dat('REORDER_JA')},reorder:{data:dat('REORDER')},translate:{data:dat('TRANSLATE')},basic:{data:dat('BASIC')},verb:{data:dat('VERBS')}}[MODE];
 var N=cfg.data.length,course=0,order=[],idx=0,score=0,answered=0,wrong=[];
-function startCourse(n){course=n;order=shuffle(cfg.data).slice(0,Math.min(n,N));idx=0;score=0;answered=0;wrong=[];render()}
-function retryWrong(){order=shuffle(wrong);idx=0;score=0;answered=0;wrong=[];render()}
+function startCourse(n){retried=false;course=n;order=shuffle(cfg.data).slice(0,Math.min(n,N));idx=0;score=0;answered=0;wrong=[];render()}
+var locked=false,retried=false;
+function setLock(on){locked=on;['topback','back'].forEach(function(id){var e=document.getElementById(id);if(e)e.style.display=on?'none':''});window.onbeforeunload=on?function(e){e.preventDefault();e.returnValue='';return ''}:null}
+function retryWrong(){retried=true;order=shuffle(wrong);idx=0;score=0;answered=0;wrong=[];render()}
 function mark(q,ok){answered++;if(ok)hit();else wrong.push(q)}
 function qText(q){if(MODE==='form')return esc(q.s.replace('{}','( '+q.v+' )'));if(MODE==='reorder')return '語を並べかえ: '+esc(shuffle(q.w.split(' ')).join(' / '));if(MODE==='basic')return esc(q.q);if(MODE==='verb')return '「'+esc(q.j)+'」';return esc(q.j)}
 function slug(s){return s.toLowerCase().replace(/[^a-z0-9]+/g,'-').replace(/^-+|-+$/g,'')}
@@ -29,13 +31,14 @@ function pick(a){return a[Math.floor(Math.random()*a.length)]}
 function finish(){var r=score/order.length;
  var k=r>=0.9?['jumping','すばらしい!やりきったね!']:r>=0.7?['smile','よくできました!その調子!']:r>=0.5?['cheering','あと少し!もう一回やってみよう']:['tiring','ふぅ、おつかれさま!ここまでやりきったのがえらい。ここからが伸びるところ!'];
  if(!wrong.length)k=['jumping',MODE==='basic'?'基本コース クリア!全問正解!KTに自慢してね!':'全問正解!KTに自慢してね!'];
+ if(MODE==='verb'){setLock(wrong.length>0);if(!wrong.length&&retried)k=['jumping','やりなおしクリア!ぜんぶ正解できたね!これで定着!']}
  var w='';
  if(wrong.length){w='<div class="wrongs"><b>まちがえた問題(' +wrong.length+'問)</b><ol>';wrong.forEach(function(q){w+='<li>'+qText(q)+'</li>'});w+='</ol><p>次の塾でKTに質問しよう!<br>一歩ずつ英語に寄り添っていこう!</p></div>'}
  app.innerHTML='<div class="slate finish"><div class="chalk s-small">RESULT</div><div class="chalk s-score"><b>'+score+'</b><span> / '+order.length+'</span></div><svg class="chalk s-line" viewBox="0 0 300 8" preserveAspectRatio="none"><path d="M2 5 C60 2,120 7,180 4 S270 3,298 5" stroke="#f0b765" stroke-width="3.2" fill="none" stroke-linecap="round"/></svg></div><div class="kt-say"><img src="'+KT.img(k[0])+'" alt="KT" width="110"><div class="bubble"><b>KTからひとこと</b>'+k[1]+'</div></div>'+w
-  +(wrong.length?'<button class="acc" id="retry">まちがえた問題だけもう一度</button>':'')
-  +'<button class="'+(wrong.length?'sub2':'acc')+'" id="again">もう一度'+(MODE==='basic'?'':'(同じコース)')+'</button>'+(MODE==='basic'?'':'<button class="sub2" id="pickc">コースをえらびなおす</button>');
+  +(wrong.length?'<button class="acc" id="retry">'+(MODE==='verb'?'まちがえた語をやりなおそう':'まちがえた問題だけもう一度')+'</button>':'')
+  +(MODE==='verb'&&wrong.length?'<p class="hint">せいかいするまで、ほかのページには進めません。まちがえた語を、もう一度やってみよう!</p>':'<button class="'+(wrong.length?'sub2':'acc')+'" id="again">もう一度'+(MODE==='basic'?'':'(同じコース)')+'</button>'+(MODE==='basic'?'':'<button class="sub2" id="pickc">コースをえらびなおす</button>'));
  if(wrong.length)document.getElementById('retry').onclick=retryWrong;
- document.getElementById('again').onclick=function(){startCourse(course)};var pc=document.getElementById('pickc');if(pc)pc.onclick=chooser}
+ var ag=document.getElementById('again');if(ag)ag.onclick=function(){startCourse(course)};var pc=document.getElementById('pickc');if(pc)pc.onclick=chooser}
 function nextBtn(){return '<button class="acc" id="next">'+(idx+1<order.length?'次の問題 →':'結果を見る')+'</button>'}
 function bindNext(){document.getElementById('next').onclick=function(){idx++;render()}}
 function render(){if(idx>=order.length)return finish();var q=order[idx];({form:rForm,reorderja:rReorder,reorder:rReorder,translate:rTrans,basic:rBasic,verb:rVerb})[MODE](q)}
@@ -124,6 +127,9 @@ function playSeq(base,btn){try{if(curAudio)curAudio.pause()}catch(e){}clearTimeo
   au.onended=function(){seqTimer=setTimeout(next,450)};au.onerror=function(){if(btn)btn.classList.remove('on')};
   var pr=au.play();if(pr&&pr.catch)pr.catch(function(){if(btn)btn.classList.remove('on')})}
  next()}
+function mates(q){var g=dat('VGROUPS');for(var i=0;i<g.length;i++){if(g[i][1].indexOf(q.b)>=0){var ms=g[i][1].filter(function(x){return x!==q.b});if(!ms.length)return '';
+  var l=ms.map(function(b){var v=cfg.data.filter(function(x){return x.b===b})[0];return esc(v.b)+' – '+esc(v.p)+' – '+esc(v.pp)}).join('<br>');
+  return '<div class="mates"><b>KTのワンポイント</b> '+esc(g[i][0])+'<br>'+l+'</div>'}}return ''}
 function rVerb(q){
  var K=[['b','原形'],['p','過去形'],['pp','過去分詞形']],opts={},sel={};
  var h=header()+'<div class="card"><span class="qlabel">Q'+(idx+1)+'</span><p class="ja">「'+esc(q.j)+'」</p><p class="hint">原形・過去形・過去分詞形を、それぞれえらぼう。</p></div>';
@@ -137,7 +143,7 @@ function rVerb(q){
  chk.onclick=function(){done=true;chk.disabled=true;var ok=true;
   K.forEach(function(kk){var k=kk[0];Array.prototype.forEach.call(app.querySelectorAll('.choice[data-k="'+k+'"]'),function(x){x.disabled=true;x.classList.remove('sel');var v=opts[k][+x.getAttribute('data-i')];if(v===q[k])x.classList.add('right');else if(v===sel[k])x.classList.add('bad')});if(sel[k]!==q[k])ok=false});
   mark(q,ok);
-  document.getElementById('res').innerHTML='<div class="res '+(ok?'ok':'ng')+'"><b class="big '+(ok?'ok':'ng')+'">'+(ok?pick(OKS):pick(NGS))+'</b><p class="en">'+esc(q.b)+' – '+esc(q.p)+' – '+esc(q.pp)+'</p><p>'+VT[q.t]+'</p><button type="button" class="sound" id="vsnd"><svg viewBox="0 0 24 24" width="20" height="20" aria-hidden="true"><path d="M3 9v6h4l5 4V5L7 9H3z" fill="currentColor"/><path d="M16 8.5a5 5 0 0 1 0 7M18.7 5.8a9 9 0 0 1 0 12.4" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"/></svg><span>3つ続けて聞く</span></button></div>'+nextBtn();
+  document.getElementById('res').innerHTML='<div class="res '+(ok?'ok':'ng')+'"><b class="big '+(ok?'ok':'ng')+'">'+(ok?pick(OKS):pick(NGS))+'</b><p class="en">'+esc(q.b)+' – '+esc(q.p)+' – '+esc(q.pp)+'</p><p>'+VT[q.t]+'</p>'+mates(q)+'<button type="button" class="sound" id="vsnd"><svg viewBox="0 0 24 24" width="20" height="20" aria-hidden="true"><path d="M3 9v6h4l5 4V5L7 9H3z" fill="currentColor"/><path d="M16 8.5a5 5 0 0 1 0 7M18.7 5.8a9 9 0 0 1 0 12.4" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"/></svg><span>3つ続けて聞く</span></button></div>'+nextBtn();
   var sb=document.getElementById('vsnd');sb.onclick=function(){playSeq(q.b,sb)};bindNext();playSeq(q.b,sb)}
 }
 
