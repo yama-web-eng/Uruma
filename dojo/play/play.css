@@ -88,3 +88,6 @@ button.choice.bad{border-color:#d9534f;background:#fdeeee}
 button.sound{display:inline-flex;align-items:center;gap:8px;margin:6px 0 4px;padding:9px 16px;border:1.5px solid var(--blue);border-radius:999px;background:#fff;color:var(--blue);font:inherit;font-size:.92rem;font-weight:700;cursor:pointer;width:auto}
 button.sound:hover{background:#f4f8fc}
 button.sound.on{background:var(--blue);color:#fff}
+.vgrp{margin:0 0 12px}.vlab{font-weight:700;color:var(--blue);margin:0 0 6px;font-size:.95rem}
+.vch{display:grid;grid-template-columns:1fr 1fr;gap:8px}.vch button.choice{text-align:center;padding:11px 8px;margin:0}
+button.choice.sel{border-color:var(--blue);background:#e8f0fb;font-weight:700}

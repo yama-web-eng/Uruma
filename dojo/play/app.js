@@ -6,12 +6,12 @@ function shuffle(a){a=a.slice();for(var i=a.length-1;i>0;i--){var j=Math.floor(M
 function norm(s){return s.toLowerCase().replace(/[’‘]/g,"'").replace(/[.!?,]/g,' ').replace(/\s+/g,' ').trim()}
 function expand(s){var re=/\(([^()|]+(?:\|[^()|]+)+)\)/;var m=re.exec(s);if(!m)return[s];var out=[];m[1].split('|').forEach(function(o){expand(s.replace(re,o)).forEach(function(x){out.push(x)})});return out}
 function dat(n){return typeof window[n]!=='undefined'?window[n]:[]}
-var cfg={form:{data:dat('FORM')},reorderja:{data:dat('REORDER_JA')},reorder:{data:dat('REORDER')},translate:{data:dat('TRANSLATE')},basic:{data:dat('BASIC')}}[MODE];
+var cfg={form:{data:dat('FORM')},reorderja:{data:dat('REORDER_JA')},reorder:{data:dat('REORDER')},translate:{data:dat('TRANSLATE')},basic:{data:dat('BASIC')},verb:{data:dat('VERBS')}}[MODE];
 var N=cfg.data.length,course=0,order=[],idx=0,score=0,answered=0,wrong=[];
 function startCourse(n){course=n;order=shuffle(cfg.data).slice(0,Math.min(n,N));idx=0;score=0;answered=0;wrong=[];render()}
 function retryWrong(){order=shuffle(wrong);idx=0;score=0;answered=0;wrong=[];render()}
 function mark(q,ok){answered++;if(ok)hit();else wrong.push(q)}
-function qText(q){if(MODE==='form')return esc(q.s.replace('{}','( '+q.v+' )'));if(MODE==='reorder')return '語を並べかえ: '+esc(shuffle(q.w.split(' ')).join(' / '));if(MODE==='basic')return esc(q.q);return esc(q.j)}
+function qText(q){if(MODE==='form')return esc(q.s.replace('{}','( '+q.v+' )'));if(MODE==='reorder')return '語を並べかえ: '+esc(shuffle(q.w.split(' ')).join(' / '));if(MODE==='basic')return esc(q.q);if(MODE==='verb')return '「'+esc(q.j)+'」';return esc(q.j)}
 function slug(s){return s.toLowerCase().replace(/[^a-z0-9]+/g,'-').replace(/^-+|-+$/g,'')}
 var curAudio=null;
 function audioBtn(text){if(typeof KT_AUDIO==='undefined')return '';return '<button type="button" class="sound" data-t="'+esc(text)+'"><svg viewBox="0 0 24 24" width="20" height="20" aria-hidden="true"><path d="M3 9v6h4l5 4V5L7 9H3z" fill="currentColor"/><path d="M16 8.5a5 5 0 0 1 0 7M18.7 5.8a9 9 0 0 1 0 12.4" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"/></svg><span>音声を聞く</span></button>'}
@@ -38,7 +38,7 @@ function finish(){var r=score/order.length;
  document.getElementById('again').onclick=function(){startCourse(course)};var pc=document.getElementById('pickc');if(pc)pc.onclick=chooser}
 function nextBtn(){return '<button class="acc" id="next">'+(idx+1<order.length?'次の問題 →':'結果を見る')+'</button>'}
 function bindNext(){document.getElementById('next').onclick=function(){idx++;render()}}
-function render(){if(idx>=order.length)return finish();var q=order[idx];({form:rForm,reorderja:rReorder,reorder:rReorder,translate:rTrans,basic:rBasic})[MODE](q)}
+function render(){if(idx>=order.length)return finish();var q=order[idx];({form:rForm,reorderja:rReorder,reorder:rReorder,translate:rTrans,basic:rBasic,verb:rVerb})[MODE](q)}
 
 function rForm(q){
  var parts=q.s.split('{}');
@@ -107,6 +107,38 @@ function rBasic(q){
   Array.prototype.forEach.call(app.querySelectorAll('.choice'),function(x){x.disabled=true;if(cs[+x.getAttribute('data-i')].ok)x.className+=' right'});
   if(!ok)b.className+=' bad';
   document.getElementById('res').innerHTML='<div class="res '+(ok?'ok':'ng')+'"><b class="big '+(ok?'ok':'ng')+'">'+(ok?pick(OKS):pick(NGS)+' 正解は「'+esc(q.c[0])+'」')+'</b><p>'+esc(q.e)+'</p>'+(q.s?audioBtn(q.s):'')+'</div>'+nextBtn();bindAudio();bindNext()}})
+}
+
+var VT={AAA:'3つとも同じ形(A-A-A型)',ABA:'原形と過去分詞形が同じ形(A-B-A型)',ABB:'過去形と過去分詞形が同じ形(A-B-B型)',ABC:'3つとも形がちがう(A-B-C型)'};
+function regular(b){if(b==='be')return '';if(/e$/.test(b))return b+'d';if(/[^aeiou]y$/.test(b))return b.slice(0,-1)+'ied';return b+'ed'}
+function vOpts(q,k){var ans=q[k],out=[ans];function add(x){if(x&&out.indexOf(x)<0)out.push(x)}
+ var own=shuffle(['b','p','pp'].filter(function(x){return x!==k}).map(function(x){return q[x]}));
+ if(k!=='b')add(regular(q.b));own.slice(0,2).forEach(add);
+ shuffle(cfg.data.filter(function(v){return v!==q})).forEach(function(v){if(out.length<4)add(v[k])});
+ return shuffle(out.slice(0,4))}
+var seqTimer=null;
+function playSeq(base,btn){try{if(curAudio)curAudio.pause()}catch(e){}clearTimeout(seqTimer);var n=1;
+ if(btn)btn.classList.add('on');
+ function next(){if(n>3){if(btn)btn.classList.remove('on');return}
+  var au=new Audio(AUDIO_BASE+'iv/'+base+'-'+n+'.mp3?v=1');curAudio=au;n++;
+  au.onended=function(){seqTimer=setTimeout(next,450)};au.onerror=function(){if(btn)btn.classList.remove('on')};
+  var pr=au.play();if(pr&&pr.catch)pr.catch(function(){if(btn)btn.classList.remove('on')})}
+ next()}
+function rVerb(q){
+ var K=[['b','原形'],['p','過去形'],['pp','過去分詞形']],opts={},sel={};
+ var h=header()+'<div class="card"><span class="qlabel">Q'+(idx+1)+'</span><p class="ja">「'+esc(q.j)+'」</p><p class="hint">原形・過去形・過去分詞形を、それぞれえらぼう。</p></div>';
+ K.forEach(function(kk){opts[kk[0]]=vOpts(q,kk[0]);h+='<div class="vgrp" data-k="'+kk[0]+'"><div class="vlab">'+kk[1]+'</div><div class="vch">';
+  opts[kk[0]].forEach(function(o,i){h+='<button type="button" class="choice" data-k="'+kk[0]+'" data-i="'+i+'">'+esc(o)+'</button>'});h+='</div></div>'});
+ app.innerHTML=h+'<button id="chk" class="acc" disabled>答えあわせ</button><div id="res"></div>';
+ var chk=document.getElementById('chk'),done=false;
+ Array.prototype.forEach.call(app.querySelectorAll('.choice'),function(b){b.onclick=function(){if(done)return;var k=b.getAttribute('data-k');
+  Array.prototype.forEach.call(app.querySelectorAll('.choice[data-k="'+k+'"]'),function(x){x.classList.remove('sel')});
+  b.classList.add('sel');sel[k]=opts[k][+b.getAttribute('data-i')];chk.disabled=!(sel.b&&sel.p&&sel.pp)}});
+ chk.onclick=function(){done=true;chk.disabled=true;var ok=true;
+  K.forEach(function(kk){var k=kk[0];Array.prototype.forEach.call(app.querySelectorAll('.choice[data-k="'+k+'"]'),function(x){x.disabled=true;x.classList.remove('sel');var v=opts[k][+x.getAttribute('data-i')];if(v===q[k])x.classList.add('right');else if(v===sel[k])x.classList.add('bad')});if(sel[k]!==q[k])ok=false});
+  mark(q,ok);
+  document.getElementById('res').innerHTML='<div class="res '+(ok?'ok':'ng')+'"><b class="big '+(ok?'ok':'ng')+'">'+(ok?pick(OKS):pick(NGS))+'</b><p class="en">'+esc(q.b)+' – '+esc(q.p)+' – '+esc(q.pp)+'</p><p>'+VT[q.t]+'</p><button type="button" class="sound" id="vsnd"><svg viewBox="0 0 24 24" width="20" height="20" aria-hidden="true"><path d="M3 9v6h4l5 4V5L7 9H3z" fill="currentColor"/><path d="M16 8.5a5 5 0 0 1 0 7M18.7 5.8a9 9 0 0 1 0 12.4" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"/></svg><span>3つ続けて聞く</span></button></div>'+nextBtn();
+  var sb=document.getElementById('vsnd');sb.onclick=function(){playSeq(q.b,sb)};bindNext();playSeq(q.b,sb)}
 }
 
 function chooser(){
