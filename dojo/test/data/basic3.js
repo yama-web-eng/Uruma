@@ -1177,6 +1177,130 @@ var BASIC_PARTS={
 }
 ]
 },
+"4-1-3": {
+"label": "4-1〜3",
+"title": "関係代名詞(主格 who, which, that)",
+"tips": [
+"<b>主格の関係代名詞</b>は、人なら who、物なら which。that は人にも物にも使えます。",
+"関係代名詞の<b>すぐ後ろは動詞</b>。ここが「主格」の見分けポイントです。",
+"I have a friend. + She plays the piano. → <b>She を who に変えて</b>くっつけると I have a friend who plays the piano. になります。",
+"who / which / that の後ろの動詞は、<b>先行詞に合わせます</b>。先行詞が3人称単数なら plays、goes のように s(es)を忘れずに。",
+"先行詞が複数(friends, students など)なら、動詞は <b>s をつけない形</b>。like, play のままです。",
+"日本語に訳すときは<b>後ろから前へ</b>。「ピアノを弾く(who plays the piano)+ 姉(a sister)」の順です。",
+"<b>主格の関係代名詞は省略できません</b>。後ろに主語がなく、すぐ動詞が来るからです。",
+"who の後ろが <b>is ～ing</b> なら「～している」。a girl who is singing は「歌っている女の子」です。",
+"who の後ろが <b>was / were + 過去分詞</b>なら「～された」。a book which was written by ～ は「～によって書かれた本」です。",
+"for や since があれば<b>現在完了</b>。a teacher who has lived here for ten years のように、has / have + 過去分詞です。",
+"yesterday や ago があれば<b>過去形</b>。a man who came here yesterday のように動詞を過去形にします。"
+],
+"basic": [
+{
+"q": "先行詞が「人」のとき、主格の関係代名詞として使うのはどれ?",
+"c": [
+"who",
+"which",
+"what",
+"how"
+],
+"e": "人 → who、物 → which。that は人にも物にも使えます。"
+},
+{
+"q": "先行詞が「物・動物」のとき、主格の関係代名詞として使うのはどれ?",
+"c": [
+"which",
+"who",
+"what",
+"how"
+],
+"e": "物・動物 → which。(that でも OK)"
+},
+{
+"q": "人にも物にも使える関係代名詞はどれ?",
+"c": [
+"that",
+"who",
+"which",
+"what"
+],
+"e": "that は先行詞が人でも物でも使えます。who は人だけ、which は物だけです。"
+},
+{
+"q": "主格の関係代名詞の「すぐ後ろ」に来るのはどれ?",
+"c": [
+"動詞",
+"主語 + 動詞",
+"名詞",
+"前置詞"
+],
+"e": "主格の関係代名詞は、後ろの文の「主語」の働きをします。だから、すぐ後ろは動詞です。"
+},
+{
+"q": "主格の関係代名詞は省略できる?",
+"c": [
+"省略できない",
+"いつでも省略できる",
+"who だけ省略できる",
+"that だけ省略できる"
+],
+"e": "主格は省略できません(後ろに主語がなく、すぐ動詞が来るため)。省略できるのは目的格(Unit 5)です。"
+},
+{
+"q": "( )に入る語は? The girl ( ) lives next door is Ayu.",
+"c": [
+"who",
+"which",
+"what",
+"it"
+],
+"e": "先行詞 The girl は人 → who。",
+"s": "The girl who lives next door is Ayu."
+},
+{
+"q": "( )に入る語は? This is the book ( ) was written by Soseki.",
+"c": [
+"which",
+"who",
+"what",
+"it"
+],
+"e": "先行詞 the book は物 → which(that も可)。",
+"s": "This is the book which was written by Soseki."
+},
+{
+"q": "( )に入る語は? I have a brother who ( ) the guitar well.",
+"c": [
+"plays",
+"play",
+"playing",
+"to play"
+],
+"e": "先行詞 a brother は3人称単数。現在の文なので plays(3単現の s)。",
+"s": "I have a brother who plays the guitar well."
+},
+{
+"q": "( )に入る語は? The students who ( ) in this room are my classmates.",
+"c": [
+"study",
+"studies",
+"studied",
+"studying"
+],
+"e": "先行詞 The students は複数、現在の文 → study(s は付けない)。",
+"s": "The students who study in this room are my classmates."
+},
+{
+"q": "「I have a dog. It runs fast.」を1文にしたものはどれ?",
+"c": [
+"I have a dog which runs fast.",
+"I have a dog it runs fast.",
+"I have a dog who runs fast.",
+"I have a dog which it runs fast."
+],
+"e": "It を which に変えてくっつけます。It は残しません。物(a dog)なので who ではなく which です。",
+"s": "I have a dog which runs fast."
+}
+]
+},
 "5-1-2": {
 "label": "5-1〜2",
 "title": "関係代名詞(目的格 which, that)",

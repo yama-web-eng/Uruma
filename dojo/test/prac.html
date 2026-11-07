@@ -9,10 +9,10 @@
 <div class="wrap"><div class="welcome kt"><img class="kt-img" id="kt-w" alt="KT" width="96"><div><b id="ptitle"></b><span>4種類の問題で、じっくり練習しよう。むずかしかったら飛ばしてOK!</span></div></div>
 <div class="sec">実践コース</div><div class="grid" id="cats"></div>
 <div class="tip" id="tip"></div><a class="back" id="back" href="part.html">← もどる</a>
-<script>var Q=new URLSearchParams(location.search),G=Q.get("g")||"3",PK=Q.get("p");document.write('<script src="data/prac'+G+'.js?v=1"><\/script><script src="data/basic'+G+'.js?v=2"><\/script>')</script>
+<script>var Q=new URLSearchParams(location.search),G=Q.get("g")||"3",PK=Q.get("p");document.write('<script src="data/prac'+G+'.js?v=2"><\/script><script src="data/basic'+G+'.js?v=3"><\/script>')</script>
 <script>(function(){document.getElementById("kt-w").src=KT.img("smile");var d=(window.PRAC||{})[PK],b=(window.BASIC_PARTS||{})[PK];var bk="part.html?g="+G+"&p="+PK;document.getElementById("back").href=bk;document.getElementById("topback").href=bk;
 if(!d){document.getElementById("ptitle").textContent="ページが見つかりません";return}
-var lab="中"+G+" Unit "+PK.replace("-1-2","-1〜2");document.title="実践コース｜"+lab;document.getElementById("psub").textContent=lab+" ／ 実践コース";document.getElementById("ph1").textContent=d.title;document.getElementById("ptitle").textContent=d.title;
+var lab="中"+G+" Unit "+PK.replace("-1-2","-1〜2").replace("-1-3","-1〜3");document.title="実践コース｜"+lab;document.getElementById("psub").textContent=lab+" ／ 実践コース";document.getElementById("ph1").textContent=d.title;document.getElementById("ptitle").textContent=d.title;
 var C=[["form","01","語形変化","目印を見つけて、正しい形に"],["reorderja","02","並べかえ(日本語あり)","日本語をヒントに、語を並べて英文に"],["reorder","03","並べかえ(日本語なし)","英語だけで並べかえ"],["translate","04","日本語を英語にする","自分の力で英文を書いてみよう"]],h="";
 C.forEach(function(c){h+='<a class="tile" href="pr.html?g='+G+'&p='+PK+'&c='+c[0]+'"><div class="no">'+c[1]+'</div><div class="tt">'+c[2]+'</div><div class="ds">'+c[3]+'</div></a>'});
 document.getElementById("cats").innerHTML=h;
