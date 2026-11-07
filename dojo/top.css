@@ -1,0 +1,66 @@
+/* トップページ専用:落ち着いた配色 + 本物の黒板 */
+:root{--ink:#22313f;--line:#dbe5ef}
+body.home{background:#fbfcfe;color:var(--ink);font-family:"Zen Maru Gothic","Hiragino Sans","Noto Sans JP","Yu Gothic",sans-serif}
+.home .top{background:#fff;border-bottom:1px solid var(--line);padding:10px 20px}
+.home .top img{height:34px}
+
+/* ===== 黒板 ===== */
+.boardwrap{max-width:720px;margin:22px auto 0;padding:0 14px}
+.frame{background:linear-gradient(180deg,#a9794a,#8c5f35);padding:9px;border-radius:5px;box-shadow:0 1px 0 #c9a074 inset,0 6px 14px rgba(40,30,20,.25)}
+.board{position:relative;overflow:hidden;text-align:center;color:#fbfdf8;padding:38px 16px 40px;border-radius:2px;
+ background-color:#2c3f36;
+ background-image:
+  url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' width='300' height='300'><filter id='n'><feTurbulence type='fractalNoise' baseFrequency='.8' numOctaves='3' stitchTiles='stitch'/><feColorMatrix values='0 0 0 0 1  0 0 0 0 1  0 0 0 0 1  0 0 0 .22 0'/></filter><rect width='300' height='300' filter='url(%23n)'/></svg>"),
+  linear-gradient(112deg,transparent 18%,rgba(255,255,255,.07) 22%,transparent 30%,transparent 46%,rgba(255,255,255,.05) 52%,transparent 62%,rgba(255,255,255,.06) 78%,transparent 86%),
+  radial-gradient(70% 60% at 30% 25%,rgba(255,255,255,.08),transparent 70%),
+  radial-gradient(120% 100% at 50% 50%,transparent 55%,rgba(0,0,0,.35));
+ box-shadow:inset 0 3px 8px rgba(0,0,0,.55),inset 0 0 0 1px rgba(0,0,0,.4)}
+.board::before{content:"";position:absolute;inset:0;pointer-events:none;
+ background:
+  radial-gradient(60% 18% at 30% 70%,rgba(255,255,255,.07),transparent),
+  radial-gradient(45% 14% at 72% 32%,rgba(255,255,255,.06),transparent);filter:blur(6px)}
+.board>*{position:relative}
+.chalk{filter:url(#chalk)}
+.board .chalk-sub{font-family:"Klee One","Zen Maru Gothic",sans-serif;font-weight:600;font-size:.95rem;letter-spacing:.2em;color:#ffe2b0}
+.board h1{font-family:"Klee One","Zen Maru Gothic",sans-serif;font-weight:600;font-size:2.3rem;letter-spacing:.08em;margin:8px 0 10px;color:#fff;text-shadow:0 0 6px rgba(255,255,255,.35)}
+.board .uline{display:block;width:62%;max-width:300px;height:8px;margin:0 auto 12px}
+.board .eq{font-family:"Klee One",serif;font-size:1rem;letter-spacing:.1em;color:#cfe8fb}
+.board .scrawl{position:absolute;color:rgba(255,255,255,.55);font-family:"Klee One",serif;font-size:.85rem;line-height:1.4;pointer-events:none;filter:url(#chalk)}
+.scrawl.s1{left:3.5%;top:10%;transform:rotate(-5deg)}.scrawl.s2{right:3.5%;top:12%;transform:rotate(4deg)}
+.scrawl.s3{left:4%;top:42%;transform:rotate(3deg)}.scrawl.s4{right:4%;top:44%;transform:rotate(-3deg);text-align:left}
+.scrawl.s5{left:3.5%;bottom:11%;transform:rotate(-3deg)}.scrawl.s6{right:3.5%;bottom:11%;transform:rotate(3deg)}
+.scrawl.s7{left:38%;bottom:5%;transform:rotate(-1deg);font-size:.78rem;color:rgba(255,255,255,.4)}
+@media(max-width:600px){.board{padding:58px 12px 62px}.scrawl.s3,.scrawl.s4,.scrawl.s7{display:none}.board .scrawl{font-size:.74rem}.scrawl.s1{top:7%}.scrawl.s2{top:8%}.scrawl.s5{bottom:7%}.scrawl.s6{bottom:7%}}
+/* チョーク受け */
+.tray{position:relative;margin:0 -2px;height:16px;background:linear-gradient(#b98652,#8f6137);border-radius:0 0 4px 4px;box-shadow:0 3px 0 #6d4824;max-width:720px}
+.trays{max-width:720px;margin:0 auto;padding:0 14px}
+.tray::before{content:"";position:absolute;left:8%;right:8%;top:0;height:5px;background:rgba(255,255,255,.35);filter:blur(3px);border-radius:3px}
+.tray i{position:absolute;top:-6px;height:9px;border-radius:5px;box-shadow:0 1px 1px rgba(0,0,0,.35)}
+.tray i:nth-child(1){left:14%;width:36px;background:#f7f7f2}
+.tray i:nth-child(2){left:calc(14% + 44px);width:24px;background:#f0b765;transform:rotate(-3deg)}
+.tray i:nth-child(3){right:26%;width:30px;background:#8ec6ee}
+.tray i.er{right:9%;top:-12px;width:46px;height:15px;border-radius:3px;background:linear-gradient(#5b4a3a 0 55%,#d9d4c7 55%);box-shadow:0 2px 2px rgba(0,0,0,.4)}
+
+/* ===== 本文 ===== */
+.wrap{max-width:720px;margin:0 auto;padding:26px 14px 56px}
+.welcome{margin:0 0 30px;padding:0 4px;font-size:.98rem;line-height:1.9}
+.welcome b{display:block;color:var(--blue);font-size:1.1rem;margin-bottom:2px}
+.sec{font-family:"Klee One","Zen Maru Gothic",sans-serif;font-weight:600;font-size:1.05rem;color:var(--ink);margin:0 0 14px;display:flex;align-items:center;gap:12px;letter-spacing:.08em}
+.sec::after{content:"";flex:1;border-top:1px solid var(--line)}
+.grid{display:grid;grid-template-columns:1fr 1fr;gap:14px}
+@media(max-width:420px){.grid{gap:10px}}
+.tile{position:relative;display:block;text-decoration:none;color:var(--ink);background:#fff;border:1px solid var(--line);border-radius:12px;padding:18px 16px 16px;box-shadow:0 1px 2px rgba(34,49,63,.05);transition:transform .15s,box-shadow .15s,border-color .15s}
+.tile:hover{transform:translateY(-2px);box-shadow:0 8px 18px rgba(34,49,63,.10);border-color:#b9d3ea}
+.tile .no{font-family:"Klee One",serif;font-weight:600;font-size:1.5rem;color:var(--blue);line-height:1;letter-spacing:.04em}
+.tile .no::after{content:"";display:block;width:26px;height:3px;background:var(--orange);margin-top:8px;border-radius:2px}
+.tile .tt{font-weight:700;font-size:1.02rem;line-height:1.4;margin-top:12px}
+.tile .ds{font-size:.78rem;color:var(--grey);line-height:1.6;margin-top:4px}
+.tile .ribbon{position:absolute;top:14px;right:14px;color:var(--grey);font-size:.68rem;font-weight:700;border:1px solid var(--line);border-radius:999px;padding:0 9px;background:#f4f8fc}
+.tile.soon{pointer-events:none}
+.home footer{margin-top:34px;letter-spacing:.2em}
+
+.sample{text-align:center;margin:26px 0 0;font-size:.9rem}.sample a{color:var(--blue);font-weight:700;text-decoration:none;border-bottom:1px dashed var(--blue)}
+
+.welcome.kt{display:flex;align-items:flex-end;gap:14px;background:#fff;border:1px solid var(--line);border-radius:12px;padding:14px 18px 0 14px;margin-bottom:30px;overflow:hidden}
+.welcome.kt .kt-img{flex:0 0 auto;height:auto;width:96px;display:block;margin-top:-6px}
+.welcome.kt>div{padding-bottom:16px;align-self:center}

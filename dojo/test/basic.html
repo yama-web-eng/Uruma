@@ -1,0 +1,20 @@
+<!doctype html>
+<html lang="ja"><head><meta charset="utf-8"><meta name="color-scheme" content="light only"><meta name="viewport" content="width=device-width,initial-scale=1">
+<title>基本コース｜KTの特訓道場</title>
+<link rel="preconnect" href="https://fonts.googleapis.com"><link href="https://fonts.googleapis.com/css2?family=Zen+Maru+Gothic:wght@400;500;700;900&family=Klee+One:wght@400;600&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="../style.css"><link rel="stylesheet" href="../top.css?v=7"><script src="../kt-outfit.js?v=2"></script><link rel="stylesheet" href="../play/play.css?v=7"><link rel="stylesheet" href="test.css?v=6"></head>
+<body class="home play"><svg width="0" height="0" style="position:absolute" aria-hidden="true"><defs><filter id="chalk" x="-5%" y="-10%" width="110%" height="120%"><feTurbulence type="fractalNoise" baseFrequency="0.85" numOctaves="2" seed="4" result="n"/><feDisplacementMap in="SourceGraphic" in2="n" scale="2" xChannelSelector="R" yChannelSelector="G" result="d"/><feTurbulence type="fractalNoise" baseFrequency="1.6" numOctaves="1" seed="9" result="g"/><feColorMatrix in="g" type="matrix" values="0 0 0 0 1  0 0 0 0 1  0 0 0 0 1  0 0 0 -.6 1.15" result="m"/><feComposite in="d" in2="m" operator="in"/></filter></defs></svg>
+<div class="top"><img src="../logo.png" alt="Uruma"><a href="chu3.html" id="topback">もどる</a></div>
+<div class="boardwrap mini"><div class="frame"><header class="board"><div class="chalk-sub chalk" id="psub"></div><h1 class="chalk" id="ph1"></h1></header></div></div><div class="trays mini"><div class="tray"><i></i><i></i><i></i><i class="er"></i></div></div>
+<div class="wrap"><div id="app"></div><a class="back" id="back" href="part.html">← もどる</a>
+<script>var Q=new URLSearchParams(location.search),G=Q.get("g")||"3",PK=Q.get("p"),UN=Q.get("u");document.write('<script src="data/basic'+G+'.js?v=2"><\/script>')</script>
+<script>var BASIC=[],KT_AUDIO=true,MODE="basic";(function(){
+function sh(a){a=a.slice();for(var i=a.length-1;i>0;i--){var j=Math.floor(Math.random()*(i+1)),t=a[i];a[i]=a[j];a[j]=t}return a}
+var P=window.BASIC_PARTS||{},sub,back;
+if(UN){var ks=Object.keys(P).filter(function(k){return k.split("-")[0]===UN}),ls=ks.map(function(k){return sh(P[k].basic)}),i=0;
+ while(BASIC.length<10){var add=false;ls.forEach(function(l){if(BASIC.length<10&&l[i]){BASIC.push(l[i]);add=true}});i++;if(!add)break}
+ sub="中"+G+" Unit "+UN+" 全体";back="unit.html?g="+G+"&u="+UN;document.title="基本コース｜"+sub}
+else{var d=P[PK]||{label:"",title:"",basic:[]};BASIC=d.basic;sub="中"+G+" Unit "+d.label+" ／ "+d.title;back="part.html?g="+G+"&p="+PK;document.title="基本コース｜中"+G+" Unit "+d.label}
+document.getElementById("psub").textContent=sub;document.getElementById("ph1").textContent="基本コース(必須10問)";
+document.getElementById("back").href=back;document.getElementById("topback").href=back})()</script>
+<script src="../play/app.js?v=10"></script><footer>URUMA</footer></div></body></html>
