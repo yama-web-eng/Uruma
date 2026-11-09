@@ -690,7 +690,7 @@ var BASIC_PARTS={
 "hope",
 "enjoy",
 "finish",
-"stop"
+"mind"
 ],
 "e": "hope のあとは to + 動詞の原形です。"
 },
@@ -926,7 +926,7 @@ var BASIC_PARTS={
 "c": [
 "Yes, I am.",
 "Yes, I do.",
-"Yes, I will.",
+"Yes, I going.",
 "Yes, I go."
 ],
 "e": "be動詞を使った疑問文には、be動詞で答えます。"

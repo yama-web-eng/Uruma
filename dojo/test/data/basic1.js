@@ -174,7 +174,7 @@ var BASIC_PARTS={
 "q": "( )に入る語は?  I like ( ).",
 "c": [
 "dogs",
-"a dog",
+"a dogs",
 "dog is",
 "are dogs"
 ],
@@ -1037,7 +1037,7 @@ var BASIC_PARTS={
 "c": [
 "I want a new bike.",
 "I want to a new bike.",
-"I want to have a new bike.",
+"I want have a new bike.",
 "I am want a new bike."
 ],
 "e": "I want + 名詞 =「～がほしい」。",
@@ -1317,7 +1317,7 @@ var BASIC_PARTS={
 "q": "Is this a pen? に「はい」と答える文はどれ?",
 "c": [
 "Yes, it is.",
-"Yes, this is.",
+"Yes, they are.",
 "Yes, I am.",
 "Yes, it does."
 ],
@@ -1327,7 +1327,7 @@ var BASIC_PARTS={
 "q": "Is that a dog? に「いいえ」と答える文はどれ?",
 "c": [
 "No, it isn't.",
-"No, that isn't.",
+"No, they aren't.",
 "No, I'm not.",
 "No, it doesn't."
 ],
@@ -1359,8 +1359,8 @@ var BASIC_PARTS={
 "q": "( )に入る語は?  Is that a cat? — No, ( ) isn't.",
 "c": [
 "it",
-"that",
-"this",
+"they",
+"he",
 "she"
 ],
 "e": "that は it で受けます。",
