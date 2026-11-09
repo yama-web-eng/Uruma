@@ -16,7 +16,7 @@ function mark(q,ok){answered++;if(ok)hit();else wrong.push(q)}
 function qText(q){if(MODE==='form')return esc(q.s.replace('{}','( '+q.v+' )'));if(MODE==='reorder')return '語を並べかえ: '+esc(shuffle(q.w.split(' ')).join(' / '));if(MODE==='basic'||MODE==='vocab')return esc(q.q);if(MODE==='verb')return '「'+esc(q.j)+'」';return esc(q.j)}
 function slug(s){return s.toLowerCase().replace(/[^a-z0-9]+/g,'-').replace(/^-+|-+$/g,'')}
 var curAudio=null;
-function audioBtn(text){if(typeof KT_AUDIO==='undefined')return '';return '<button type="button" class="sound" data-t="'+esc(text)+'"><svg viewBox="0 0 24 24" width="20" height="20" aria-hidden="true"><path d="M3 9v6h4l5 4V5L7 9H3z" fill="currentColor"/><path d="M16 8.5a5 5 0 0 1 0 7M18.7 5.8a9 9 0 0 1 0 12.4" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"/></svg><span>音声を聞く</span></button>'}
+function audioBtn(text,lb){if(typeof KT_AUDIO==='undefined')return '';return '<button type="button" class="sound" data-t="'+esc(text)+'"><svg viewBox="0 0 24 24" width="20" height="20" aria-hidden="true"><path d="M3 9v6h4l5 4V5L7 9H3z" fill="currentColor"/><path d="M16 8.5a5 5 0 0 1 0 7M18.7 5.8a9 9 0 0 1 0 12.4" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"/></svg><span>'+(lb||'音声を聞く')+'</span></button>'}
 function bindAudio(){Array.prototype.forEach.call(app.querySelectorAll('.sound'),function(b){b.onclick=function(){
  try{if(curAudio){curAudio.pause()}}catch(e){}
  var au=new Audio(AUDIO_BASE+slug(b.getAttribute('data-t'))+'.mp3?v=2');curAudio=au;
@@ -109,7 +109,7 @@ function rBasic(q){
   var c=cs[+b.getAttribute('data-i')],ok=c.ok;mark(q,ok);
   Array.prototype.forEach.call(app.querySelectorAll('.choice'),function(x){x.disabled=true;if(cs[+x.getAttribute('data-i')].ok)x.className+=' right'});
   if(!ok)b.className+=' bad';
-  document.getElementById('res').innerHTML='<div class="res '+(ok?'ok':'ng')+'"><b class="big '+(ok?'ok':'ng')+'">'+(ok?pick(OKS):pick(NGS)+' 正解は「'+esc(q.c[0])+'」')+'</b><p>'+esc(q.e).replace(/\n/g,'<br>')+'</p>'+(q.s?audioBtn(q.s):'')+'</div>'+nextBtn();bindAudio();bindNext()}})
+  document.getElementById('res').innerHTML='<div class="res '+(ok?'ok':'ng')+'"><b class="big '+(ok?'ok':'ng')+'">'+(ok?pick(OKS):pick(NGS)+' 正解は「'+esc(q.c[0])+'」')+'</b><p>'+esc(q.e).replace(/\n/g,'<br>')+'</p>'+(q.s?audioBtn(q.s,q.s2?'単語を聞く':null):'')+(q.s2?audioBtn(q.s2,'例文を聞く'):'')+'</div>'+nextBtn();bindAudio();bindNext()}})
 }
 
 var VT={AAA:'3つとも同じ形(A-A-A型)',ABA:'原形と過去分詞形が同じ形(A-B-A型)',ABB:'過去形と過去分詞形が同じ形(A-B-B型)',ABC:'3つとも形がちがう(A-B-C型)'};

@@ -13,9 +13,9 @@ function buildVocab(W){
    if(dir==='ej'){if(near(e.m,d.m))continue}else{if(lw.indexOf(e.w.toLowerCase())>=0||e.w.toLowerCase().indexOf(lw)>=0)continue;if(near(e.m,d.m))continue}
    ds.push(d);seenM[d.m]=1;seenW[lw]=1}
   if(ds.length<3)return;
-  var ex=e.x?('例文: '+e.x+(e.j?' ／ '+e.j:'')):'';
+  var xt=(e.x||'').replace(/\\/g,'');var ex=e.x?('例文: '+xt+(e.j?' ／ '+e.j:'')):'';
   var full=e.w+' = '+e.f;
-  if(dir==='ej')out.push({q:'「'+e.w+'」('+POSJ[e.p]+')の意味は?',c:[e.m].concat(ds.map(function(d){return d.m})),e:full+(ex?'\n'+ex:''),s:e.w});
-  else out.push({q:'「'+e.m+'」('+POSJ[e.p]+')を英語にすると?',c:[e.w].concat(ds.map(function(d){return d.w})),e:full+(ex?'\n'+ex:''),s:e.w})
+  if(dir==='ej')out.push({q:'「'+e.w+'」('+POSJ[e.p]+')の意味は?',c:[e.m].concat(ds.map(function(d){return d.m})),e:full+(ex?'\n'+ex:''),s:e.w,s2:xt});
+  else out.push({q:'「'+e.m+'」('+POSJ[e.p]+')を英語にすると?',c:[e.w].concat(ds.map(function(d){return d.w})),e:full+(ex?'\n'+ex:''),s:e.w,s2:xt})
  });
  return out}
