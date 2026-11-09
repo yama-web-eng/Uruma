@@ -114,10 +114,14 @@ function rBasic(q){
 
 var VT={AAA:'3つとも同じ形(A-A-A型)',ABA:'原形と過去分詞形が同じ形(A-B-A型)',ABB:'過去形と過去分詞形が同じ形(A-B-B型)',ABC:'3つとも形がちがう(A-B-C型)'};
 function regular(b){if(b==='be')return '';if(/e$/.test(b))return b+'d';if(/[^aeiou]y$/.test(b))return b.slice(0,-1)+'ied';return b+'ed'}
+var VPAIR=[['find','understand'],['bring','take'],['have','hold'],['go','become'],['be','have']];
+function vtok(v){return v.j.split('/').map(function(s){return s.replace(/^[~～]/,'')})}
+function vclash(a,b){for(var i=0;i<VPAIR.length;i++){var p=VPAIR[i];if((p[0]===a.b&&p[1]===b.b)||(p[1]===a.b&&p[0]===b.b))return true}
+ var x=vtok(a),y=vtok(b);for(var i=0;i<x.length;i++)for(var j=0;j<y.length;j++)if(x[i].indexOf(y[j])>=0||y[j].indexOf(x[i])>=0)return true;return false}
 function vOpts(q,k){var ans=q[k],out=[ans];function add(x){if(x&&out.indexOf(x)<0)out.push(x)}
  var own=shuffle(['b','p','pp'].filter(function(x){return x!==k}).map(function(x){return q[x]}));
  if(k!=='b')add(regular(q.b));own.slice(0,2).forEach(add);
- shuffle(cfg.data.filter(function(v){return v!==q})).forEach(function(v){if(out.length<4)add(v[k])});
+ shuffle(cfg.data.filter(function(v){return v!==q&&!vclash(q,v)})).forEach(function(v){if(out.length<4)add(v[k])});
  return shuffle(out.slice(0,4))}
 var seqTimer=null;
 function playSeq(base,btn){try{if(curAudio)curAudio.pause()}catch(e){}clearTimeout(seqTimer);var n=1;
